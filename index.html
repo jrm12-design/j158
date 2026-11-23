@@ -241,6 +241,8 @@
     var a = f.arrival.value, d = f.departure.value;
     if (a && d && d < a){ msg.className='error'; msg.textContent='Departure must be after arrival.'; return; }
     var data = {}; new FormData(f).forEach(function(v,k){ data[k]=v; });
+    var SRC = new URLSearchParams(location.search).get('src');
+    if (SRC) data.heard = (data.heard ? data.heard + ' / ' : '') + 'link: ' + SRC.slice(0,40);
     if (STAFF) data.staffKey = new URLSearchParams(location.search).get('k') || '';
     go.disabled = true; go.textContent = 'Sending…'; msg.className='small'; msg.textContent='';
     var fail = function(t){ go.disabled=false; go.textContent = STAFF ? 'Send notice' : 'Request Slip J158';
